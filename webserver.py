@@ -7,7 +7,7 @@ import re
 import sys
 import signal
 
-from http.server import SimpleHTTPRequestHandler
+from http.server import CGIHTTPRequestHandler
 
 import webbrowser
 import socketserver
@@ -19,7 +19,10 @@ prjctPath = None
 httpd = None
 
 
-class WebServerHandler(SimpleHTTPRequestHandler):
+class WebServerHandler(CGIHTTPRequestHandler):
+
+    cgi_directories = ['/www']
+
     def __init__(self, *args, **kwargs):
         super().__init__(
             *args,
@@ -28,6 +31,25 @@ class WebServerHandler(SimpleHTTPRequestHandler):
 
     def log_message(self, format, *args):
         return
+
+    def do_POST(self):
+
+        import json
+        from io import BytesIO
+
+        content_length = int(self.headers['Content-Length'])
+        body = self.rfile.read(content_length)
+
+        self.send_response(301)
+        self.send_header('Location','http://127.0.0.1:8000/web/')
+        self.end_headers()
+
+        import subprocess
+        process = subprocess.Popen(
+            ['kicad', body],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
+        stdout, stderr = process.communicate()
 
 
 def signal_handler(sig, frame):

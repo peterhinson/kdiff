@@ -505,6 +505,42 @@ function update_commits() {
 
     document.getElementById("commit1_legend_hash").innerHTML = "(" + commit1.toUpperCase() + ")";
     document.getElementById("commit2_legend_hash").innerHTML = "(" + commit2.toUpperCase() + ")";
+
+    document.getElementById("commit1_legend_hash_").innerHTML = `
+        <input type="hidden" name="hash" value="${commit1.toUpperCase()}"/>
+            (<a href="javascript:{}" onclick="document.getElementById('kicad_commit1').submit();">${commit1.toUpperCase()}</a>)`;
+
+    document.getElementById("commit2_legend_hash_").innerHTML = `
+        <input type="hidden" name="hash" value="${commit2.toUpperCase()}"/>
+            (<a href="javascript:{}" onclick="document.getElementById('kicad_commit2').submit();">${commit2.toUpperCase()}</a>)`;
+
+    // var HASH1_URL = `
+    //     <input type="hidden" name="hash1" value="${commit1.toUpperCase()}"/>
+    //     <small class="text-sm text-muted"> New
+    //     <span class="text-monospace" id=commit1_legend_hash>
+    //             (<a href="javascript:{}" onclick="document.getElementById('kicad_${commit1.toUpperCase()}').submit();">${commit1.toUpperCase()}</a>)
+    //         </span>
+    //     </small>
+    // `;
+
+    // var HASH2_URL = `
+    //     <input type="hidden" name="hash2" value="${commit2.toUpperCase()}"/>
+    //     <small class="text-sm text-muted"> Old
+    //         <span class="text-monospace" id=commit2_legend_hash>
+    //             (<a href="javascript:{}" onclick="document.getElementById('kicad_${commit2.toUpperCase()}').submit();">${commit2.toUpperCase()}</a>)
+    //         </span>
+    //     </small>
+    // `;
+
+    // var id1 = "kicad_" + commit1.toUpperCase();
+    // var id2 = "kicad_" + commit2.toUpperCase();
+
+    // console.log(id1);
+    // console.log(id2);
+
+    // document.getElementById(id1).innerHTML = HASH1_URL;
+    // document.getElementById(id2).innerHTML = HASH2_URL;
+
 }
 
 function change_page() {

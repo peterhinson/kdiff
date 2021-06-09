@@ -21,6 +21,26 @@
 					<div class="list-group 3 no-gutters" style="padding: 0px 0px 15px 0px; margin-left:10px; height: 100vh;">
 						<span style="margin-top: 1em"></span>
 						<h3 class="text-light">Kicad Revision Inspector</h3>
+
+<form id=kicad_commit1 action="/web/www/kicad" method="post">
+	<small class="text-sm text-muted">
+		<span class="text-monospace" id=commit1_legend_hash_>
+			<input type="hidden" name="hash" value="[COMMIT_1_HASH]"/>
+				(<a href="javascript:{}" onclick="document.getElementById('kicad_commit1').submit();">[COMMIT_1_HASH]</a>)
+		</span>
+	</small>
+</form>
+
+<form id=kicad_commit2 action="/web/www/kicad" method="post">
+	<small class="text-sm text-muted">
+		<span class="text-monospace" id=commit2_legend_hash_>
+			<input type="hidden" name="hash" value="[COMMIT_2_HASH]"/>
+				(<a href="javascript:{}" onclick="document.getElementById('kicad_commit2').submit();">[COMMIT_2_HASH]</a>)
+		</span>
+	</small>
+</form>
+
+
 						<h4 class="text-info text-bold">[PROJECT_TITLE]</h4>
 						<p class="text-light">Rev. [PROJECT_REVISION] - [PROJECT_DATE]</p>
 						<p class="text-light" >
@@ -105,10 +125,28 @@
 								<div id="legend" class="no-gutters">
 									<form class="rounded form-inline" style="background-color: #222; padding: 10px 5px 10px 5px">
 										<span id=commit1_legend style="margin-left:0.5em; margin-right:0.5em; color: #00FFFF; width: 10px; height: 10px;" class="iconify" data-icon="teenyicons-square-solid"></span>
+
 										<small class="text-sm text-muted"> New <span class="text-monospace" id=commit1_legend_hash>([COMMIT_1_HASH])</span></small>
+
+<!-- 								        <form id=kicad_[COMMIT_1_HASH] action="/web/www/kicad" method="post">
+								            <input type="hidden" name="hash" value="[COMMIT_1_HASH]"/>
+								            <small class="text-sm text-muted"> New <span class="text-monospace" id=commit1_legend_hash>
+								                (<a href="javascript:{}" onclick="document.getElementById('kicad_[COMMIT_1_HASH]').submit();">[COMMIT_1_HASH]</a>)</span>
+								            </small>
+								        </form>
+ -->
 										<span style="width: 2em;"></span>
 										<span id="commit2_legend" style="margin-left:0.5em; margin-right:0.5em; color: #880808; width: 10px; height: 10px;" class="iconify" data-icon="teenyicons-square-solid"></span>
+
 										<small class="text-sm text-muted"> Old <span class="text-monospace" id=commit2_legend_hash>([COMMIT_2_HASH])</span></small>
+<!--
+								        <form class="form-inline" id=kicad_[COMMIT_2_HASH] action="/web/www/kicad" method="post">
+								            <input type="hidden" name="hash" value="[COMMIT_2_HASH]"/>
+								            <small class="text-sm text-muted"> Old <span class="text-monospace" id=commit2_legend_hash>
+								                (<a href="javascript:{}" onclick="document.getElementById('kicad_[COMMIT_2_HASH]').submit();">[COMMIT_2_HASH]</a>)</span>
+								            </small>
+								        </form>
+ -->
 										<span style="width: 2em;"></span>
 										<span id="commit3_legend" style="margin-left:0.5em; margin-right:0.5em; color: #807F7F; width: 10px; height: 10px;" class="iconify" data-icon="teenyicons-square-solid"></span>
 										<small class="text-sm text-muted"> Unchanged </small>
