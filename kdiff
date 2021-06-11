@@ -772,6 +772,11 @@ generate_comparisons()
 	sed_ -i "s|\[INITIAL_COMMIT_1_PCB\]|../${commit1}/${board_name}-${initial_layer}.svg|g" "${web_dir}/${main_html}"
 	sed_ -i "s|\[INITIAL_COMMIT_2_PCB\]|../${commit2}/${board_name}-${initial_layer}.svg|g" "${web_dir}/${main_html}"
 
+	# Update initial commit legend
+	echo "Setting initial commit"
+	sed_ -i "s|\[COMMIT_1_HASH\]|\U${commit1}|g" "${web_dir}/${main_html}"
+	sed_ -i "s|\[COMMIT_2_HASH\]|\U${commit2}|g" "${web_dir}/${main_html}"
+
 	# Insert layers list
 	echo "Adding layers list"
 	insert_layers "${web_dir}/${main_html}" "$board_layers"
