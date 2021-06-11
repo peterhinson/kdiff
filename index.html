@@ -22,7 +22,7 @@
 						<span style="margin-top: 1em"></span>
 						<h3 class="text-light">Kicad Revision Inspector</h3>
 
-<form id=kicad_commit1 action="/web/www/kicad" method="post">
+<form id=kicad_commit1 action="/web/www/launch_kicad" method="post">
 	<small class="text-sm text-muted">
 		<span class="text-monospace" id=commit1_legend_hash_>
 			<input type="hidden" name="hash" value="[COMMIT_1_HASH]"/>
@@ -31,7 +31,7 @@
 	</small>
 </form>
 
-<form id=kicad_commit2 action="/web/www/kicad" method="post">
+<form id=kicad_commit2 action="/web/www/launch_kicad" method="post">
 	<small class="text-sm text-muted">
 		<span class="text-monospace" id=commit2_legend_hash_>
 			<input type="hidden" name="hash" value="[COMMIT_2_HASH]"/>
@@ -128,7 +128,7 @@
 
 										<small class="text-sm text-muted"> New <span class="text-monospace" id=commit1_legend_hash>([COMMIT_1_HASH])</span></small>
 
-<!-- 								        <form id=kicad_[COMMIT_1_HASH] action="/web/www/kicad" method="post">
+<!-- 								        <form id=kicad_[COMMIT_1_HASH] action="/web/www/launch_kicad" method="post">
 								            <input type="hidden" name="hash" value="[COMMIT_1_HASH]"/>
 								            <small class="text-sm text-muted"> New <span class="text-monospace" id=commit1_legend_hash>
 								                (<a href="javascript:{}" onclick="document.getElementById('kicad_[COMMIT_1_HASH]').submit();">[COMMIT_1_HASH]</a>)</span>
@@ -140,7 +140,7 @@
 
 										<small class="text-sm text-muted"> Old <span class="text-monospace" id=commit2_legend_hash>([COMMIT_2_HASH])</span></small>
 <!--
-								        <form class="form-inline" id=kicad_[COMMIT_2_HASH] action="/web/www/kicad" method="post">
+								        <form class="form-inline" id=kicad_[COMMIT_2_HASH] action="/web/www/launch_kicad" method="post">
 								            <input type="hidden" name="hash" value="[COMMIT_2_HASH]"/>
 								            <small class="text-sm text-muted"> Old <span class="text-monospace" id=commit2_legend_hash>
 								                (<a href="javascript:{}" onclick="document.getElementById('kicad_[COMMIT_2_HASH]').submit();">[COMMIT_2_HASH]</a>)</span>
