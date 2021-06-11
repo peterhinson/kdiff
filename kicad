@@ -4,29 +4,34 @@
 # Restore the version of repository given by the HASH
 # - Inside kidiff folder
 
-echo >> /tmp/kdiff.log
-echo "=============" >> /tmp/kdiff.log
-echo $(date) >> /tmp/kdiff.log
-echo "$*" >> /tmp/kdiff.log
+echo >> kdiff.log
+echo "=============" >> kdiff.log
+echo $(date) >> kdiff.log
+echo "$*" >> kdiff.log
 
 repo_hash=$(cut -d "=" -f2 <<< "$1")
 repo_path=$(git rev-parse --show-toplevel)
 repo_name=$(basename "$repo_path")
 repo_clone="/tmp/${repo_name}_$repo_hash"
 
-echo repo_hash=$repo_hash >> /tmp/kdiff.log
-echo repo_path=$repo_path >> /tmp/kdiff.log
-echo repo_name=$repo_name >> /tmp/kdiff.log
-echo repo_clone=$repo_clone >> /tmp/kdiff.log
+#echo repo_hash=$repo_hash >> kdiff.log
+#echo repo_path=$repo_path >> kdiff.log
+#echo repo_name=$repo_name >> kdiff.log
+#echo repo_clone=$repo_clone >> kdiff.log
 
+# Get a copy of the repo and change to the commit indicated by the hash
 cp -fr "$repo_path" "$repo_clone"
-pushd $repo_clone || exit >> /tmp/kdiff.log
+pushd $repo_clone || exit >> kdiff.log
 git reset --HARD
 git checkout $repo_hash
 
 # Launch Kicad
-
-# On Linux/WSL it needs an absolute path
-/usr/bin/kicad "$repo_clone/board.pro"
-
-# On OSX it has to be in /Applications folder
+case $OSTYPE in
+	darwin*)
+		# On OSX it has to be in /Applications folder
+		open -n --fresh -a Kicad "$repo_clone/board.pro"
+	*)
+		# On Linux/WSL it needs an absolute path
+		/usr/bin/kicad "$repo_clone/board.pro"
+		;;
+esac
