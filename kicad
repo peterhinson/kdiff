@@ -30,6 +30,7 @@ case $OSTYPE in
 	darwin*)
 		# On OSX it has to be in /Applications folder
 		open -n --fresh -a Kicad "$repo_clone/board.pro"
+		;;
 	*)
 		# On Linux/WSL it needs an absolute path
 		/usr/bin/kicad "$repo_clone/board.pro"
