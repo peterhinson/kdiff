@@ -2,3 +2,4 @@ Dockerfile
 .dockerignore
 /misc
 **/.git
+*.pyc

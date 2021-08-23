@@ -213,7 +213,7 @@ insert_commits()
 			hash=$(echo "${commit}" | cut -d'|' -f1 | sed_ "s/^ //g" | sed_ "s/[ t]\+//g" )
 			date=$(echo "${commit}" | cut -d'|' -f2 | cut -d' ' -f1-2 | sed_ "s/^ //g" )
 			user=$(echo "${commit}" | cut -d'|' -f3 | sed_ "s/^ //g" )
-			 msg=$(echo "${commit}" | cut -d'|' -f4 | sed_ "s/^ //g" )
+			msg=$(echo "${commit}" | cut -d'|' -f4 | sed_ "s/^ //g" )
 
 
 			# check for changes in ".sch|.kicad_sch" files
@@ -513,7 +513,8 @@ generate_schematic_artifacts()
 
 	IFS=$'\n'
 
-    blank_path=$(realpath --relative-to="./" "${web_dir}/blank.svg")
+	blank_path="blank.svg"
+	cp "${web_dir}blank.svg" "blank.svg"
 
 	for sch_page_name in ${sch_page_names}; do
 
@@ -551,6 +552,10 @@ generate_schematic_artifacts()
 			sch2-*)
 				new_sch_name=${sch_page_svg//sch2/sch}
 				mv -f "${sch_page_svg}" "${output_dir}/${commit2}/${new_sch_name}" 2> /dev/null
+				;;
+			blank.svg)
+				cp "${sch_page_svg}" "${output_dir}/${commit1}/${sch_page_svg}" 2> /dev/null
+				cp "${sch_page_svg}" "${output_dir}/${commit2}/${sch_page_svg}" 2> /dev/null
 				;;
 		esac
 	done
@@ -628,7 +633,7 @@ generate_layout_artifacts()
 	fi
 
 	IFS=$'\n'
-    blank_path=$(realpath --relative-to="${output_dir}/${commit1}/" "${web_dir}/blank.svg")
+	blank_path="blank.svg"
 
 	for layer in ${used_board_layers}; do
 		layer_id=$(echo "${layer}" | cut -d " " -f1)
@@ -639,11 +644,15 @@ generate_layout_artifacts()
 		# Create blank svgs if some is missing
 
 		if [[ ! -f "${output_dir}/${commit1}/${board_name}-${layer_id}-${layer_name}.svg" ]]; then
-			ln -sf "${blank_path}" "${output_dir}/${commit1}/${board_name}-${layer_id}-${layer_name}.svg"
+			pushd "${output_dir}/${commit1}" &> /dev/null
+			ln -sf "${blank_path}" "${board_name}-${layer_id}-${layer_name}.svg"
+			popd &> /dev/null
 		fi
 
 		if [[ ! -f "${output_dir}/${commit2}/${board_name}-${layer_id}-${layer_name}.svg" ]]; then
-			ln -sf "${blank_path}" "${output_dir}/${commit2}/${board_name}-${layer_id}-${layer_name}.svg"
+			pushd "${output_dir}/${commit2}" &> /dev/null
+			ln -sf "${blank_path}" "${board_name}-${layer_id}-${layer_name}.svg"
+			popd &> /dev/null
 		fi
 	done
 }
@@ -793,6 +802,16 @@ generate_artifacts()
 	fi
 
 	IFS=$'\n'
+	echo "Assembling the HTML"
+
+	# Copy assets
+	cp -f "${script_path}/${main_html}"  "${web_dir}/"
+	cp -f "${script_path}/kdiff.js"      "${web_dir}/"
+	cp -f "${script_path}/kdiff.css"     "${web_dir}/"
+	cp -f "${script_path}/blank.svg"     "${web_dir}/"
+	cp -f "${script_path}/favicon.ico"   "${web_dir}/"
+	cp -f "${script_path}/redirect.html" "${web_dir}/../index.html"
+
 	for i in ${hashs}; do
 
 		k=0
@@ -841,16 +860,7 @@ generate_artifacts()
 
 	done
 
-	echo "Assembling the HTML"
-
-	# Copy assets
-	cp -f "${script_path}/${main_html}"  "${web_dir}/"
-	cp -f "${script_path}/kdiff.js"      "${web_dir}/"
-	cp -f "${script_path}/kdiff.css"     "${web_dir}/"
-	cp -f "${script_path}/blank.svg"     "${web_dir}/"
-	cp -f "${script_path}/favicon.ico"   "${web_dir}/"
-	cp -f "${script_path}/redirect.html" "${web_dir}/../index.html"
-
+	
 	# Selected commit index
 	commit1_idx=0
 	commit2_idx=1
